@@ -20,3 +20,5 @@ To import IH_scraper please do the following:
 import sys
 sys.path.append('SocialMediaScraper/src')
 
+You can use cron to automatically run this script e.g. every day:
+https://www.jcchouinard.com/python-automation-with-cron-on-mac/
