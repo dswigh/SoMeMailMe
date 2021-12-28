@@ -134,7 +134,7 @@ This is an automated message, please do not reply. Instead email thecuriouchemis
         message = self.write_email(SoMeDict)
         port = 465  # For SSL
         smtp_server = "smtp.gmail.com"
-        password = input("Type your password and press enter: ")
+        password = input("Type your email password and press enter: ")
 
         context = ssl.create_default_context()
         with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
@@ -157,7 +157,7 @@ def main():
     print('Successfully updated csv file')
 
     # if sunday send out email
-    if datetime.datetime.today().weekday() == 1:
+    if datetime.datetime.today().weekday() == 6:
         SoMe_user.send_email(sender_email, receiver_email)
         print('Successfully sent you a Sunday weekly recap!')
 
