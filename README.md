@@ -22,3 +22,5 @@ sys.path.append('SocialMediaScraper/src')
 
 You can use cron to automatically run this script e.g. every day:
 https://www.jcchouinard.com/python-automation-with-cron-on-mac/
+
+To make it easier to update this repo without overwriting SoMe_data.csv you can place this csv file in the folder containing this repo.

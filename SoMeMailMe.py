@@ -130,7 +130,7 @@ This is an automated message, please do not reply. Instead email thecuriouchemis
         return message
     
     def send_email(self, sender_email, receiver_email):
-        SoMeDict = self.extract_csv_data('SoMe_data.csv')
+        SoMeDict = self.extract_csv_data('../SoMe_data.csv')
         message = self.write_email(SoMeDict)
         port = 465  # For SSL
         smtp_server = "smtp.gmail.com"
@@ -153,7 +153,7 @@ def main():
     # Get a free token at www.influencerhunters.com
     
     #update csv file
-    SoMe_user.update_csv('SoMe_data.csv')
+    SoMe_user.update_csv('../SoMe_data.csv')
     print('Successfully updated csv file')
 
     # if sunday send out email
