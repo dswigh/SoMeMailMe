@@ -1,3 +1,5 @@
+#This script takes the email password as an argument, 
+# which is required for automation
 #imports
 import sys
 import csv
@@ -84,59 +86,55 @@ class SoMeMailMe():
         return SoMeDict
     
     def write_email(self, SoMeDict):
-
         try:
             tt_new_follower_ratio = int(SoMeDict['new_tt_followers'])/(int(SoMeDict['tt_followers'])-int(SoMeDict['new_tt_followers']))
             tt_new_like_ratio = int(SoMeDict['new_tt_likes'])/(int(SoMeDict['tt_likes'])-int(SoMeDict['new_tt_likes']))
             ig_new_follower_ratio = int(SoMeDict['new_ig_followers'])/(int(SoMeDict['ig_followers'])-int(SoMeDict['new_ig_followers']))
 
-            message = f"""\
-Subject: Social media weekly recap {SoMeDict['date']}
+            message = (f"Subject: Social media weekly recap {SoMeDict['date']}\n\n"
 
-Hi {self.tt_id},
+f"Hi {self.tt_id},\n\n"
 
-You now have {SoMeDict['tt_followers']} followers on TikTok, \
-that's {SoMeDict['new_tt_followers']} ({round(tt_new_follower_ratio*100)}%) more than last week with {SoMeDict['new_tt_posts']} new posts!
+f"You now have {SoMeDict['tt_followers']} followers on TikTok, \
+that's {SoMeDict['new_tt_followers']} ({round(tt_new_follower_ratio*100)}%) more than last week with {SoMeDict['new_tt_posts']} new posts!\n\n"
 
-You now have {SoMeDict['tt_likes']} likes on TikTok, \
-that's {SoMeDict['new_tt_likes']} ({round(tt_new_like_ratio*100)}%) more than last week with {SoMeDict['new_tt_posts']} new posts!
+f"You now have {SoMeDict['tt_likes']} likes on TikTok, \
+that's {SoMeDict['new_tt_likes']} ({round(tt_new_like_ratio*100)}%) more than last week with {SoMeDict['new_tt_posts']} new posts!\n\n"
 
-You now have {SoMeDict['ig_followers']} followers on Instagram, \
-that's {SoMeDict['new_ig_followers']} ({round(ig_new_follower_ratio*100)}%) more than last week!
+f"You now have {SoMeDict['ig_followers']} followers on Instagram, \
+that's {SoMeDict['new_ig_followers']} ({round(ig_new_follower_ratio*100)}%) more than last week!\n\n"
 
-Kinds regards,
-The Curious Chemist
+"Kinds regards,\n"
+"The Curious Chemist\n\n\n"
 
 
-This is an automated message, please do not reply. Instead email thecuriouchemist1@gmail.com."""
+"This is an automated message, please do not reply. Instead email thecuriouchemist1@gmail.com.")
         
         except KeyError:
-            message = f"""\
-Subject: Social media weekly recap {SoMeDict['date']}
+            message = (f"Subject: Social media weekly recap {SoMeDict['date']}\n\n"
 
-Hi {self.tt_id},
+f"Hi {self.tt_id},\n\n"
 
-You now have {SoMeDict['tt_followers']} followers on TikTok.
+f"You now have {SoMeDict['tt_followers']} followers on TikTok.\n\n"
 
-You now have {SoMeDict['tt_likes']} likes on TikTok.
+f"You now have {SoMeDict['tt_likes']} likes on TikTok.\n\n"
 
-You now have {SoMeDict['ig_followers']} followers on Instagram.
+f"You now have {SoMeDict['ig_followers']} followers on Instagram.\n\n"
 
-Kinds regards,
-The Curious Chemist
+"Kinds regards,\n"
+"The Curious Chemist\n\n\n"
 
 
-This is an automated message, please do not reply. Instead email thecuriouchemist1@gmail.com."""
+"This is an automated message, please do not reply. Instead email thecuriouchemist1@gmail.com.")
         
         return message
     
-    def send_email(self, sender_email, receiver_email):
+    def send_email(self, sender_email, receiver_email, sender_email_password):
         SoMeDict = self.extract_csv_data('../SoMe_data.csv')
         message = self.write_email(SoMeDict)
         port = 465  # For SSL
         smtp_server = "smtp.gmail.com"
-        password = getpass("Type your email password and press enter: ")
-        #password = input()
+        password = sender_email_password
 
         context = ssl.create_default_context()
         with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
@@ -148,7 +146,7 @@ def main():
     args = sys.argv[1:]
     #args should be in this order, see also  readme.md
     
-    tt_id, ig_id, token, sender_email, receiver_email = args
+    tt_id, ig_id, token, sender_email, receiver_email, sender_email_password = args
 
     #initiate SoMeMailMe:
     SoMe_user = SoMeMailMe(tt_id, ig_id, token)
@@ -160,7 +158,7 @@ def main():
 
     # if sunday send out email
     if datetime.datetime.today().weekday() == 6:
-        SoMe_user.send_email(sender_email, receiver_email)
+        SoMe_user.send_email(sender_email, receiver_email, sender_email_password)
         print('Successfully sent you a Sunday weekly recap!')
 
 if __name__ == "__main__":
