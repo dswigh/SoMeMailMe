@@ -5,6 +5,7 @@ import datetime
 import pandas as pd
 import smtplib, ssl
 from SocialMediaScraper.src.scraper import IH_scraper
+from getpass import getpass
 
 
 # get data
@@ -134,7 +135,8 @@ This is an automated message, please do not reply. Instead email thecuriouchemis
         message = self.write_email(SoMeDict)
         port = 465  # For SSL
         smtp_server = "smtp.gmail.com"
-        password = input("Type your email password and press enter: ")
+        password = getpass("Type your email password and press enter: ")
+        #password = input()
 
         context = ssl.create_default_context()
         with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
