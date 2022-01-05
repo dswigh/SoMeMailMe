@@ -159,9 +159,9 @@ def main():
     print('Successfully updated csv file')
 
     # if sunday send out email
-    if datetime.datetime.today().weekday() == 6:
+    if datetime.datetime.today().weekday() == 2:
         SoMe_user.send_email(sender_email, receiver_email)
-        print('Successfully sent you a Sunday weekly recap!')
+        print('Successfully sent you a weekly recap!')
 
 if __name__ == "__main__":
     main()
