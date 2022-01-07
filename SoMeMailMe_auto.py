@@ -154,12 +154,12 @@ def main():
     
     #update csv file
     SoMe_user.update_csv('../SoMe_data.csv')
-    print('Successfully updated csv file')
+    #print('Successfully updated csv file')
 
     # if sunday send out email
     if datetime.datetime.today().weekday() == 6:
         SoMe_user.send_email(sender_email, receiver_email, sender_email_password)
-        print('Successfully sent you a Sunday weekly recap!')
+        #print('Successfully sent you a Sunday weekly recap!')
 
 if __name__ == "__main__":
     main()
