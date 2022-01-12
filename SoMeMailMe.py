@@ -130,17 +130,15 @@ This is an automated message, please do not reply. Instead email thecuriouchemis
         
         return message
     
-    def send_email(self, sender_email, receiver_email):
+    def send_email(self, sender_email, receiver_email, sender_email_password):
         SoMeDict = self.extract_csv_data('../SoMe_data.csv')
         message = self.write_email(SoMeDict)
         port = 465  # For SSL
         smtp_server = "smtp.gmail.com"
-        password = getpass("Type your email password and press enter: ")
-        #password = input()
 
         context = ssl.create_default_context()
         with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
-            server.login(sender_email, password)
+            server.login(sender_email, sender_email_password)
             server.sendmail(sender_email, receiver_email, message)
 
 def main():
@@ -159,8 +157,10 @@ def main():
     print('Successfully updated csv file')
 
     # if sunday send out email
-    if datetime.datetime.today().weekday() == 2:
-        SoMe_user.send_email(sender_email, receiver_email)
+    if True: #datetime.datetime.today().weekday() == 2:
+        sender_email_password = getpass("Type your email password and press enter: ")
+        #password = input()
+        SoMe_user.send_email(sender_email, receiver_email, sender_email_password)
         print('Successfully sent you a weekly recap!')
 
 if __name__ == "__main__":

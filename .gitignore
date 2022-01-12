@@ -4,5 +4,5 @@
 # so I am not allowed to distribute it by explicitly including it in this repo
 # I only reference to it
 SocialMediaScraper/
-
 .DS_Store
+__pycache__/
